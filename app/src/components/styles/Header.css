@@ -1,0 +1,56 @@
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #007acc;
+  height: 80px;
+  box-shadow: 0px 0px 3px 3px;
+}
+
+.left-section {
+  width: 100px;
+}
+
+.hamburger {
+  font-size: 30px;
+  margin-left: 10px;
+  width: 30px;
+  padding: 10px;
+  text-align: left;
+  transition: 0.3s;
+}
+
+.hamburger:hover {
+  transform: scale(1.05);
+  color: white;
+}
+
+.header-title {
+  font-size: 40px;
+}
+
+.logout {
+  width: 30px;
+  transition: 0.3s;
+}
+
+.logout:hover {
+  transform: scale(1.05)
+}
+
+.logout-text {
+  font-size: 16px;
+  color: #98bdd3;
+}
+
+.header-right {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.logout-wrapper {
+  width: 100px;
+}

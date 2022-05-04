@@ -5,7 +5,8 @@ services:
     ports:
       - 3000:3000
     environment:
-      - REACT_APP_CUSTOM_MESSAGE=This message was defined in the docker-compose.yml file!
+      - REACT_APP_SERVER_URL=http://localhost:3001
+      - REACT_APP_AUTH_URL=http://localhost:8080
     depends_on:
       - blog-api
 
@@ -15,16 +16,22 @@ services:
     ports:
       - 3001:3001
     environment:
-      - CUSTOM_MESSAGE=This custom API message was also defined in the docker-compose.yml file!
+      - PORT=3001
+      - NODE_ENV=development
+      - AUTH_URL=http://localhost:8080
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=/run/secrets/db_pass
       - POSTGRES_DB=postgres
-      - NODE_ENV=production
-      - DB_CONTAINER=db-docker
+      - POSTGRES_HOST=blog-db
+      - POSTGRES_PORT=5432
     depends_on:
       - blog-db
+    volumes:
+      - ./api/public:/app/public
     secrets:
       - db_pass
+    env_file:
+      - ./api/env/.env
 
   blog-db:
     image: postgres:alpine
@@ -33,9 +40,8 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=/run/secrets/db_pass
       - POSTGRES_DB=postgres
-      - POSTGRES_HOST=db
+      - POSTGRES_HOST=blog-db
       - POSTGRES_PORT=5432
-    # user: 1000:1000
     ports:
       - 5432:5432
     volumes:

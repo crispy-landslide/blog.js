@@ -1,5 +1,9 @@
 const express = require('express')
+const cors = require('cors')
+const initKeycloak = require('./keycloak-config.js')
 const app = express()
+const posts = require('./routes/posts.js')
+
 
 const knex = require('knex')(require('../knexfile.js')[process.env.NODE_ENV || 'development']);
 
@@ -17,26 +21,13 @@ const knex = require('knex')(require('../knexfile.js')[process.env.NODE_ENV || '
   }
 })();
 
-var cors = require('cors')
+const keycloak = initKeycloak();
+app.use(keycloak.middleware());
 
 app.use(express.json())
 app.use(cors())
 app.options('*', cors());
 
-app.get('/api', async (req, res) => {
+app.use('/api/posts', posts);
 
-  let message = "The API is working correctly."
-
-//   knex.select('*').from('users')
-//   .then(data => {
-//     res.status(200).send({
-//       message: process.env.CUSTOM_MESSAGE || message,
-//       users: data
-//     })
-//   })
-//   .catch(err => res.status(400).send({error: err}))
-  res.send(process.env.CUSTOM_MESSAGE || message)
-
-})
-
-module.exports = app; 
+module.exports = app;
