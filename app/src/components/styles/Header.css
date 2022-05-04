@@ -3,9 +3,10 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  background-color: #007acc;
+  background-color: #172635;
   height: 80px;
-  box-shadow: 0px 0px 3px 3px;
+  box-shadow: 0px 0px 3px 3px black;
+  color: #cbdee9
 }
 
 .left-section {
@@ -23,11 +24,17 @@
 
 .hamburger:hover {
   transform: scale(1.05);
-  color: white;
+  color: orange;
 }
 
 .header-title {
   font-size: 40px;
+  transition: 0.3s;
+}
+
+.header-title:hover {
+  transform: scale(1.05);
+  color: orange;
 }
 
 .logout {
@@ -42,6 +49,12 @@
 .logout-text {
   font-size: 16px;
   color: #98bdd3;
+  transition: 0.3s;
+}
+
+.logout-text:hover {
+  font-size: 16px;
+  color: orange;
 }
 
 .header-right {

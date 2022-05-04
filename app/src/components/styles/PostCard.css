@@ -1,0 +1,106 @@
+.post-card-wrapper {
+  margin: 0px;
+  width: 50vw;
+  border-radius: 10px;
+  transition: 0.3s;
+  min-width: 380px;
+  color: #cbdee9;
+}
+
+.post-card-attributes {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 5px;
+  margin-inline: 10px;
+}
+
+.svg {
+  width: 20px;
+  -webkit-filter: invert(100%); /* safari 6.0 - 9.0 */
+  filter: invert(100%);
+  margin-right: 10px;
+}
+
+.public {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  color: orange;
+}
+
+.user {
+  color: orange
+}
+
+.hightlight {
+  color: aquamarine
+}
+
+.post-card {
+  background-color: #1b2d3e;
+  margin-bottom: 30px;
+  width: 50vw;
+  border-radius: 10px;
+  transition: 0.3s;
+  min-width: 380px;
+  color: #cbdee9;
+  border: 1px solid #101923;
+}
+
+.post-card:hover {
+  transform: scale(1.05);
+  box-shadow: 5px 5px 5px 5px black;
+  color: orange;
+  border: 1px solid orange;
+}
+
+.post-card-title {
+  font-size: 24px;
+  margin: 10px;
+  text-align: left;
+}
+
+.post-card-content {
+  font-size: 20px;
+  margin: 10px;
+  text-align: left;
+}
+
+.expand {
+  width: 90%;
+  transition: 0s;
+}
+
+.expand:hover {
+  transform: scale(1.0);
+  box-shadow: none;
+}
+
+.rule {
+  border: none;
+  background-color: #101923;
+  height: 2px;
+}
+
+.add-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+  font-size: 24px;
+  width: 30vw;
+  border: 1px solid #4dacff;
+  height: 40px;
+  color: black;
+  background-color: #4dacff;
+}
+
+.add-card:hover {
+  border: 1px solid aquamarine;
+  background-color: aquamarine;
+  color: black;
+  font-size: 36px;
+}
