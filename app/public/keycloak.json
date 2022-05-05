@@ -1,6 +1,6 @@
 {
   "realm": "showcase-auth",
-  "auth-server-url": "http://localhost:8080",
+  "auth-server-url": "https://blog.e-acres.com",
   "ssl-required": "external",
   "resource": "blogjs-app",
   "public-client": true,

@@ -2,23 +2,19 @@ services:
   blog-app:
     build: ./app
     container_name: blog-app
-    ports:
-      - 3000:3000
     environment:
-      - REACT_APP_SERVER_URL=http://localhost:3001
-      - REACT_APP_AUTH_URL=http://localhost:8080
+      - REACT_APP_SERVER_URL=https://blog.e-acres.com
+      - REACT_APP_AUTH_URL=https://blog.e-acres.com
     depends_on:
       - blog-api
 
   blog-api:
     build: ./api
     container_name: blog-api
-    ports:
-      - 3001:3001
     environment:
       - PORT=3001
       - NODE_ENV=development
-      - AUTH_URL=http://localhost:8080
+      - AUTH_URL=https://blog.e-acres.com
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=/run/secrets/db_pass
       - POSTGRES_DB=postgres
@@ -42,8 +38,6 @@ services:
       - POSTGRES_DB=postgres
       - POSTGRES_HOST=blog-db
       - POSTGRES_PORT=5432
-    ports:
-      - 5432:5432
     volumes:
       - ./db:/var/lib/postgresql/data
     secrets:
@@ -52,3 +46,7 @@ services:
 secrets:
   db_pass:
     file: ./api/env/db_pass.txt
+
+networks:
+  default:
+    name: external-network
