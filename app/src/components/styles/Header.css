@@ -52,6 +52,11 @@
   transition: 0.3s;
 }
 
+.login:hover {
+  text-decoration: underline;
+  color: orange;
+}
+
 /* .logout-text:hover {
   font-size: 16px;
   color: orange;

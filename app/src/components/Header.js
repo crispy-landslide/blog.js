@@ -41,7 +41,7 @@ const Header = () => {
                 {keycloak.tokenParsed.preferred_username}
               </div>
             </> :
-            <div className='logout-text'>
+            <div className='logout-text login'>
               Login
             </div>
         }

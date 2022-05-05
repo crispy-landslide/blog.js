@@ -1,27 +1,44 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import './styles/PostPage.css'
 import { useKeycloak } from '@react-keycloak/web'
 import { BlogContext } from "../App.js";
 import { useNavigate } from 'react-router-dom'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
+import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter'
+import {dracula} from 'react-syntax-highlighter/dist/esm/styles/prism'
+import EditPost from './EditPost'
 
+const formatDate = (date) => {
+  if (date) {
+    let hours = date.getHours().toString().padStart(2, '0')
+    let minutes = date.getMinutes().toString().padStart(2, '0')
+    return ` ${date.toDateString()} at ${hours}:${minutes}`
+  }
+}
 
-const PostPage = ({ add }) => {
+const PostPage = () => {
   const { keycloak, initialized } = useKeycloak()
   const blogContext = useContext(BlogContext);
   const navigate = useNavigate();
 
+  const [created, setCreated] = useState()
+  const [modified, setModified] = useState()
+  const [edit, setEdit] = useState(false)
+
   useEffect(() => {
     let id = Number.parseInt(window.location.pathname.split('/posts/')[1])
-
-    if (initialized && !add && blogContext.currentPost === undefined) {
+    setCreated(new Date(blogContext.currentPost?.created))
+    setModified(new Date(blogContext.currentPost?.modified))
+    if (initialized && blogContext.currentPost === undefined) {
       let found = false
       if (keycloak.authenticated && blogContext.allPosts) {
         for (let post of blogContext.allPosts) {
           if (post.id === id) {
             blogContext.setCurrentPost(post)
             found = true
+            setCreated(new Date(blogContext.currentPost?.created))
+            setModified(new Date(blogContext.currentPost?.modified))
           }
         }
       } else if (!keycloak.authenticated && blogContext.publicPosts) {
@@ -29,6 +46,8 @@ const PostPage = ({ add }) => {
           if (post.id === id) {
             blogContext.setCurrentPost(post)
             found = true
+            setCreated(new Date(blogContext.currentPost?.created))
+            setModified(new Date(blogContext.currentPost?.modified))
           }
         }
       }
@@ -39,29 +58,67 @@ const PostPage = ({ add }) => {
 
   }, [blogContext.currentPost, blogContext.publicPosts, blogContext.allPosts])
 
-
   return ( blogContext.currentPost ?
-    <div className='post-page-wrapper'>
-      <div className='post-page-attributes'>
-        <div className={`public ${blogContext.currentPost.username === keycloak.tokenParsed?.preferred_username && 'hightlight'}`}>
-          {blogContext.currentPost.public ?
-            <><img className='svg' src='/earth-americas-solid.svg' alt=''/>Public</> :
-            <><img className='svg' src='/lock-solid.svg' alt=''/>Private</>}
+    edit ?
+      <div className='edit'>
+          <EditPost post={blogContext.currentPost} setEdit={setEdit} />
+      </div> :
+      <div className='post-page-wrapper'>
+        <div className='post-page-attributes'>
+          <div className={`public ${blogContext.currentPost.username === keycloak.tokenParsed?.preferred_username && 'hightlight'}`}>
+            {blogContext.currentPost.public ?
+              <><img className='svg' src='/earth-americas-solid.svg' alt=''/>Public</> :
+              <><img className='svg' src='/lock-solid.svg' alt=''/>Private</>}
+          </div>
+          <div className={`public ${blogContext.currentPost.username === keycloak.tokenParsed?.preferred_username && 'hightlight'}`}>
+            Created {formatDate(created)}
+          </div>
+          {formatDate(created) !== formatDate(modified) &&
+            <div className={`public ${blogContext.currentPost.username === keycloak.tokenParsed?.preferred_username && 'hightlight'}`}>
+                <>Modified {formatDate(modified)}</>
+            </div>
+          }
+          <div className={`user ${blogContext.currentPost.username === keycloak.tokenParsed?.preferred_username && 'hightlight'}`}>
+            {blogContext.currentPost.username}
+          </div>
+
+          {keycloak.tokenParsed.preferred_username === blogContext.currentPost.username &&
+            <div className={`user ${blogContext.currentPost.username === keycloak.tokenParsed?.preferred_username && 'hightlight'}`}>
+              <img className='svg logout' src='/pencil-solid.svg' alt='edit' onClick={() => setEdit(true)}/>
+            </div>
+          }
         </div>
-        <div className={`user ${blogContext.currentPost.username === keycloak.tokenParsed?.preferred_username && 'hightlight'}`}>
-          {blogContext.currentPost.username}
+        <div className='post-page'>
+          <div className='post-page-title'>
+            {blogContext.currentPost.title}
+          </div>
+          <hr className='separator' />
+          <div className='post-page-content'>
+            <ReactMarkdown
+              children={blogContext.currentPost.content}
+              remarkPlugins={[remarkGfm]}
+              components={{
+                code({node, inline, className, children, ...props}) {
+                  const match = /language-(\w+)/.exec(className || '')
+                  return !inline && match ? (
+                    <SyntaxHighlighter
+                      children={String(children).replace(/\n$/, '')}
+                      style={dracula}
+                      language={match[1]}
+                      PreTag="div"
+                      {...props}
+                    />
+                  ) : (
+                    <code className={className} {...props}>
+                      {children}
+                    </code>
+                  )
+                }
+              }}
+            />
+          </div>
         </div>
-      </div>
-      <div className='post-page'>
-        <div className='post-page-title'>
-          {blogContext.currentPost.title}
-        </div>
-        <div className='post-page-content'>
-          <ReactMarkdown children={blogContext.currentPost.content} remarkPlugins={[remarkGfm]} />
-        </div>
-      </div>
-    </div>
-     : ''
+      </div> : ''
   )
 }
 

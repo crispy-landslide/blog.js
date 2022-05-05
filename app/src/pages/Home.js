@@ -31,6 +31,7 @@ const Home = () => {
   return ( posts ?
     <div className='home'>
       <>
+        <h1 className='page-title'>Home</h1>
         <div>
           {keycloak.authenticated ?
             <div className='filter-buttons'>
@@ -60,7 +61,7 @@ const Home = () => {
         {posts.length > 0 ?
         <div className='posts'>
           {keycloak.authenticated && <AddCard/>}
-          {posts.map(post => <PostCard post={post}/>)}
+          {posts.map(post => <PostCard key={post.id} post={post}/>)}
         </div>:
         <div className='no-posts'>
           No Posts Found

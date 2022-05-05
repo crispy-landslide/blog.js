@@ -26,9 +26,22 @@
   text-align: left;
   font-size: 36px;
   margin-bottom: 30px;
+  text-decoration: solid;
+}
+
+.separator {
+  border: none;
+  background-color: #001828;
+  height: 2px;
 }
 
 .post-page-content {
   text-align: left;
   font-size: 18px;
+}
+
+@media (max-width: 800px) {
+  .post-page-attributes {
+    flex-direction: column;
+  }
 }

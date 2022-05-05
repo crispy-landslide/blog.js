@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import './styles/PostCard.css'
 import { useKeycloak } from '@react-keycloak/web'
 import { BlogContext } from "../App.js";
@@ -37,12 +37,16 @@ const PostCard = ({ post }) => {
 
   const openPost = () => {
     blogContext.setCurrentPost(post)
-    console.log(post)
     navigate(`/posts/${post.id}`)
   }
 
+  const goToUser = () => {
+    blogContext.setOtherUserPosts(blogContext.allPosts.filter(allPost => allPost.username === post.username))
+    navigate(`/user/${post.username}`)
+  }
+
   return (
-    <div className={`post-card-wrapper ${post.username === keycloak.tokenParsed?.preferred_username ? 'my-card' : 'other-card'}`}>
+    <div key={post.id} className={`post-card-wrapper ${post.username === keycloak.tokenParsed?.preferred_username ? 'my-card' : 'other-card'}`}>
       <div className='post-card-attributes'>
         <div className={`public ${post.username === keycloak.tokenParsed?.preferred_username && 'hightlight'}`}>
           {post.public ?
@@ -50,11 +54,13 @@ const PostCard = ({ post }) => {
             <><img className='svg' src='/lock-solid.svg' alt=''/>Private</>
           }
         </div>
-        <div className={`user ${post.username === keycloak.tokenParsed?.preferred_username && 'hightlight'}`}>
-          {post.username}
-        </div>
+        <Link to={`/user/${post.username}`} className='link' onClick={goToUser}>
+          <div className={`user ${post.username === keycloak.tokenParsed?.preferred_username && 'hightlight'}`}>
+            {post.username}
+          </div>
+        </Link>
       </div>
-      <div key={post.id} className={`post-card`} onClick={openPost}>
+      <div className={`post-card`} onClick={openPost}>
         <div className='post-card-title'>
           {shortTitle}
         </div>

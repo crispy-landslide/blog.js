@@ -43,7 +43,17 @@
 }
 
 .user {
-  color: orange
+  color: orange;
+  z-index: 999;
+}
+
+.user:hover {
+  text-decoration: underline;
+}
+
+.link {
+  text-decoration: none;
+  z-index: 999;
 }
 
 .hightlight {
@@ -115,15 +125,15 @@
   margin-block: 30px;
   font-size: 24px;
   width: 30vw;
-  border: 1px solid #4dacff;
+  border: 1px solid #001828;
   height: 40px;
-  color: black;
-  background-color: #4dacff;
+  color: #cbdee9;
+  background-color: #001828;
 }
 
 .add-card:hover {
-  border: 1px solid aquamarine;
-  background-color: aquamarine;
+  border: 1px solid #4dacff;
+  background-color: #4dacff;
   color: black;
   font-size: 36px;
 }

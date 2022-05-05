@@ -8,6 +8,11 @@ const keycloak = initKeycloak();
 const router = express.Router();
 const knex = knexImport(knexfile[process.env.NODE_ENV || 'development']);
 
+
+//-------------------------------------------------------------------------------------------
+// GET Routes
+//-------------------------------------------------------------------------------------------
+
 // Get all public posts
 router.get('/', async (req, res) => {
   let posts = await knex('posts').select('*').where({public: 1}).catch(err => console.log(err))
@@ -79,6 +84,76 @@ router.get('/all', keycloak.protect(), async (req, res) => {
 router.get('/user/:username/public', async (req, res) => {
   let posts = await knex('posts').select('*').where({public: 1, username: req.params.username}).catch(err => console.log(err))
   res.status(200).json(posts);
+})
+
+
+//-------------------------------------------------------------------------------------------
+// POST Routes
+//-------------------------------------------------------------------------------------------
+
+// Create a new post (must be authorized)
+router.post('/', keycloak.protect(), async (req, res) => {
+  const token = req.kauth.grant.access_token.content;
+  if (req.body.title !== undefined &&
+      req.body.content !== undefined &&
+      req.body.username !== undefined &&
+      req.body.public !== undefined &&
+      req.body.created !== undefined &&
+      req.body.modified!== undefined) {
+
+    if (token.preferred_username === req.body.username) {
+      let newPost = {
+        title: req.body.title,
+        content: req.body.content,
+        username: token.preferred_username,
+        public: req.body.public,
+        created: req.body.created,
+        modified: req.body.modified
+      };
+
+      let createdPost = await knex('posts').insert(newPost).returning('*').catch(err => console.log(err));
+      res.status(201).send(createdPost[0]);
+    } else {
+      res.sendStatus(403);
+    }
+  } else {
+    res.sendStatus(400)
+  }
+})
+
+
+//-------------------------------------------------------------------------------------------
+// PATCH Routes
+//-------------------------------------------------------------------------------------------
+
+// Edit a post (must be authorized)
+router.patch('/:post_id', keycloak.protect(), async (req, res) => {
+  const token = req.kauth.grant.access_token.content;
+  if ((req.body.title !== undefined ||
+      req.body.content !== undefined ||
+      req.body.public !== undefined) &&
+      req.body.username !== undefined &&
+      req.body.modified!== undefined) {
+
+    if (token.preferred_username === req.body.username) {
+      let updatedPost = {};
+      (req.body.title !== undefined) && (updatedPost.title = req.body.title);
+      (req.body.content !== undefined) && (updatedPost.content = req.body.content);
+      (req.body.public !== undefined) && (updatedPost.public = req.body.public);
+      updatedPost.modified = req.body.modified;
+
+      let confirmUpdate = await knex('posts')
+        .where({id: req.params.post_id, username: token.preferred_username})
+        .update(updatedPost)
+        .returning('*')
+        .catch(err => console.log(err))
+      res.status(201).send(confirmUpdate[0]);
+    } else {
+      res.sendStatus(403);
+    }
+  } else {
+    res.sendStatus(400);
+  }
 })
 
 
