@@ -9,7 +9,9 @@ exports.up = function(knex) {
     table.text('content');
     table.text('username');
     table.foreign('username').references('users.username');
-    table.integer('public')
+    table.integer('public');
+    table.datetime('created');
+    table.datetime('modified');
   })
 };
 

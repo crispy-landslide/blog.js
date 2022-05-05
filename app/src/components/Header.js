@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import './styles/Header.css'
 import { useKeycloak } from '@react-keycloak/web'
 import { useNavigate } from 'react-router-dom'
+import { BlogContext } from "../App.js";
 
 
 const Header = () => {
   const { keycloak, initialized } = useKeycloak()
+  const blogContext = useContext(BlogContext);
   const navigate = useNavigate()
 
   const clickHandler = () => {
@@ -16,6 +18,10 @@ const Header = () => {
     }
   }
 
+  const goHome = () => {
+    navigate('/')
+  }
+
   return (
     <div className='header'>
       <div className='left-section'>
@@ -23,7 +29,7 @@ const Header = () => {
           &#9776;
         </div>
       </div>
-      <div className='header-title' onClick={() => navigate('/')}>
+      <div className='header-title' onClick={goHome}>
         Blog.js
       </div>
 
@@ -32,7 +38,7 @@ const Header = () => {
             <>
               <img className='svg logout' src='/arrow-right-from-bracket-solid.svg' alt='logout' />
               <div className='logout-text'>
-                Logout
+                {keycloak.tokenParsed.preferred_username}
               </div>
             </> :
             <div className='logout-text'>

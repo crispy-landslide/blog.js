@@ -13,6 +13,7 @@ const AddCard = () => {
   const navigate = useNavigate()
 
   const openPost = () => {
+    blogContext.setCurrentPost(null)
     navigate(`/posts/add`)
   }
 

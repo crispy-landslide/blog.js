@@ -3,7 +3,7 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  background-color: #172635;
+  background-color: #001828;
   height: 80px;
   box-shadow: 0px 0px 3px 3px black;
   color: #cbdee9
@@ -38,7 +38,7 @@
 }
 
 .logout {
-  width: 30px;
+  width: 60px;
   transition: 0.3s;
 }
 
@@ -52,10 +52,10 @@
   transition: 0.3s;
 }
 
-.logout-text:hover {
+/* .logout-text:hover {
   font-size: 16px;
   color: orange;
-}
+} */
 
 .header-right {
   display: flex;

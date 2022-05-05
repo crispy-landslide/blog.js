@@ -1,18 +1,30 @@
 .post-card-wrapper {
   margin: 0px;
   width: 50vw;
-  border-radius: 10px;
+  /* border-radius: 10px; */
   transition: 0.3s;
   min-width: 380px;
   color: #cbdee9;
+  border: 2px solid #001828;
+  background-color: #2d4763;
+  padding: 10px;
+  margin-bottom: 20px;
 }
 
 .post-card-attributes {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
   margin-inline: 10px;
+}
+
+.post-card-timestamps {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-inline: 10px;
+  margin-top: 10px;
 }
 
 .svg {
@@ -39,19 +51,27 @@
 }
 
 .post-card {
-  background-color: #1b2d3e;
-  margin-bottom: 30px;
+  background-color: #001828;
   width: 50vw;
-  border-radius: 10px;
+  /* border-radius: 10px; */
   transition: 0.3s;
   min-width: 380px;
-  color: #cbdee9;
-  border: 1px solid #101923;
+  /* color: #cbdee9; */
+  border: 1px solid #1a2c40;
 }
 
-.post-card:hover {
+.post-card-wrapper:hover {
   transform: scale(1.05);
-  box-shadow: 5px 5px 5px 5px black;
+  box-shadow: 3px 3px 5px 2px black;
+
+}
+
+.my-card:hover {
+  color: aquamarine;
+  border: 1px solid aquamarine;
+}
+
+.other-card:hover {
   color: orange;
   border: 1px solid orange;
 }
@@ -60,12 +80,14 @@
   font-size: 24px;
   margin: 10px;
   text-align: left;
+  color: #4dacff;
 }
 
 .post-card-content {
   font-size: 20px;
   margin: 10px;
   text-align: left;
+  color: #cbdee9;
 }
 
 .expand {
@@ -80,7 +102,7 @@
 
 .rule {
   border: none;
-  background-color: #101923;
+  background-color: #1a2c40;
   height: 2px;
 }
 
@@ -89,7 +111,8 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 30px;
+  border-radius: 5px;
+  margin-block: 30px;
   font-size: 24px;
   width: 30vw;
   border: 1px solid #4dacff;
