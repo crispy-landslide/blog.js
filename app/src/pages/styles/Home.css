@@ -35,8 +35,8 @@
 
 .active {
   border: 2px solid #4dacff;
-  background-color: #4dacff;
-  color: black;
+  /* background-color: #4dacff; */
+  color: #4dacff;
 }
 
 .no-posts {

@@ -1,7 +1,7 @@
 .post-card-wrapper {
   margin: 0px;
-  width: 50vw;
-  /* border-radius: 10px; */
+  width: 55vw;
+  border-radius: 5px;
   transition: 0.3s;
   color: #cbdee9;
   border: 2px solid #001828;
@@ -16,14 +16,14 @@
   flex-direction: row;
   justify-content: space-between;
   margin-bottom: 10px;
-  margin-inline: 10px;
+  /* margin-inline: 10px; */
 }
 
 .post-card-timestamps {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin-inline: 10px;
+  /* margin-inline: 10px; */
   margin-top: 10px;
 }
 
@@ -39,12 +39,12 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  color: orange;
+  color: #4dacff;
   margin-inline: 10px;
 }
 
 .user {
-  color: orange;
+  color: #4dacff;
   z-index: 999;
 }
 
@@ -62,36 +62,35 @@
 }
 
 .post-card {
-  background-color: #001828;
-  width: 50vw;
+  /* background-color: #001828; */
+  width: 55vw;
   /* border-radius: 10px; */
   transition: 0.3s;
   min-width: 320px;
   /* color: #cbdee9; */
-  border: 1px solid #1a2c40;
+  /* border: 1px solid #1a2c40; */
 }
 
 .post-card-wrapper:hover {
-  transform: scale(1.05);
+  transform: scale(1.02);
   box-shadow: 3px 3px 5px 2px black;
-
 }
 
 .my-card:hover {
   color: aquamarine;
-  border: 1px solid aquamarine;
+  border: 2px solid aquamarine;
 }
 
 .other-card:hover {
-  color: orange;
-  border: 1px solid orange;
+  color: #4dacff;
+  border: 2px solid #4dacff;
 }
 
 .post-card-title {
   font-size: 24px;
   margin: 10px;
   text-align: left;
-  color: #4dacff;
+  color: #92cbff;
 }
 
 .post-card-content {
