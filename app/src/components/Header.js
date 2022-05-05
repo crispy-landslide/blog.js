@@ -10,23 +10,28 @@ const Header = () => {
   const blogContext = useContext(BlogContext);
   const navigate = useNavigate()
 
+
+  const goHome = () => {
+    navigate('/')
+  }
+
   const clickHandler = () => {
     if (keycloak.authenticated) {
+      goHome()
       keycloak.logout()
     } else {
       keycloak.login()
     }
   }
 
-  const goHome = () => {
-    navigate('/')
-  }
+
 
   return (
     <div className='header'>
       <div className='left-section'>
-        <div className='hamburger'>
-          &#9776;
+        <div className='hamburger' onClick={goHome}>
+          {/* &#9776; */}
+          <img className='svg logout' src='/house-solid.svg' alt='home' />
         </div>
       </div>
       <div className='header-title' onClick={goHome}>

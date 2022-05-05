@@ -17,8 +17,13 @@ const UserPosts = () => {
     setUser(username)
     if (blogContext.otherUserPosts) {
       setPosts(blogContext.otherUserPosts)
-    } else if (blogContext.allPosts && !blogContext.otherUserPosts) {
-      let matchingPosts = blogContext.allPosts.filter(allPost => allPost.username === username)
+    } else if ((blogContext.allPosts || blogContext.publicPosts) && !blogContext.otherUserPosts) {
+      let matchingPosts = []
+      if (keycloak.authenticated) {
+        matchingPosts = blogContext.allPosts.filter(allPost => allPost.username === username)
+      } else {
+        matchingPosts = blogContext.publicPosts.filter(publicPost => publicPost.username === username)
+      }
       blogContext.setOtherUserPosts(matchingPosts)
       setPosts(matchingPosts)
     }

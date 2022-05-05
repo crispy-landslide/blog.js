@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom'
 const EditPost = ({ post, setEdit }) => {
   const { keycloak, initialized } = useKeycloak()
   const blogContext = useContext(BlogContext);
+  const [originalPost, setOriginalPost] = useState(post)
   const [title, setTitle] = useState(post.title);
   const [content, setContent] = useState(post.content);
   const [showPreview, setShowPreview] = useState(false)
@@ -18,36 +19,43 @@ const EditPost = ({ post, setEdit }) => {
 
   const editPostHandler = async (event) => {
     event.preventDefault();
-    let modifiedPost = {};
-    console.log(isPublic, !!post.public);
-    isPublic !== !!post.public && (modifiedPost.public = isPublic ? 1 : 0);
-    title !== post.title && (modifiedPost.title = title);
-    content !== post.content && (modifiedPost.content = content);
-    (modifiedPost.username = keycloak.tokenParsed.preferred_username);
-    (modifiedPost.modified = (new Date()).toISOString());
+    if (isPublic === !!post.public && title === post.title && content === post.content) {
+      alert('Please make edits before submitting.')
+    } else if (window.confirm("Are you sure you want to edit this post?")) {
+      let modifiedPost = {};
 
-    const request = {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${keycloak.token}`
-      },
-      body: JSON.stringify(modifiedPost)
-    }
+      isPublic !== !!post.public && (modifiedPost.public = isPublic ? 1 : 0);
+      title !== post.title && (modifiedPost.title = title);
+      content !== post.content && (modifiedPost.content = content);
+      (modifiedPost.username = keycloak.tokenParsed.preferred_username);
+      (modifiedPost.modified = (new Date()).toISOString());
 
-    let confirmation = await fetch(`${blogContext.serverURL}/api/posts/${post.id}`, request)
-      .then(response => response.json())
-      .then(newPost => newPost)
-      .catch(err => console.log(err))
+      const request = {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${keycloak.token}`
+        },
+        body: JSON.stringify(modifiedPost)
+      }
+
+      let confirmation = await fetch(`${blogContext.serverURL}/api/posts/${post.id}`, request)
+        .then(response => {
+          if (response.status === 200) {
+            return response.json()
+          }
+        })
+        .then(newPost => newPost)
+        .catch(err => console.log(err))
 
       if (confirmation?.title === title) {
-      blogContext.getPosts()
-      setEdit(false)
-      blogContext.setCurrentPost(confirmation)
-    } else {
-      alert('Error occurred while attempting to edit post.')
+        blogContext.getPosts()
+        setEdit(false)
+        blogContext.setCurrentPost(confirmation)
+      } else {
+        alert('Error occurred while attempting to edit post.')
+      }
     }
-
   }
 
   const changeTitle = (event) => {
@@ -60,10 +68,7 @@ const EditPost = ({ post, setEdit }) => {
 
   const previewHandler = () => {
     if (showPreview) {
-      blogContext.setCurrentPost({
-        ...post,
-        username: keycloak.tokenParsed.preferred_username
-      })
+      blogContext.setCurrentPost(originalPost)
     } else {
       blogContext.setCurrentPost({
         id: -1,
@@ -79,11 +84,37 @@ const EditPost = ({ post, setEdit }) => {
   }
 
   const cancelEdit = () => {
-    blogContext.setCurrentPost({
-      ...post,
-      username: keycloak.tokenParsed.preferred_username
-    })
+    blogContext.setCurrentPost(originalPost)
     setEdit(false)
+  }
+
+  const deletePost = async () => {
+    if (window.confirm("Are you sure you want to permanently delete this post?")) {
+      const request = {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${keycloak.token}`
+        }
+      }
+      let confirmation = await fetch(`${blogContext.serverURL}/api/posts/${post.id}`, request)
+        .then(response => {
+          if (response.status === 200) {
+            return response.json();
+          }
+        })
+        .then(deletedPost => deletedPost)
+        .catch(err => console.log(err));
+
+      if (confirmation?.title === title) {
+        blogContext.getPosts();
+        setEdit(false);
+        blogContext.setCurrentPost(null);
+        navigate('/');
+      } else {
+        alert('Error occurred while attempting to delete post.');
+      }
+    }
   }
 
   return (
@@ -122,6 +153,7 @@ const EditPost = ({ post, setEdit }) => {
           </form>
         </div>
       }
+    <button type='button' className='button delete' onClick={deletePost}>Delete Post!</button>
     </div>
   )
 }

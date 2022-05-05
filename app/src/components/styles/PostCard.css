@@ -3,12 +3,12 @@
   width: 50vw;
   /* border-radius: 10px; */
   transition: 0.3s;
-  min-width: 380px;
   color: #cbdee9;
   border: 2px solid #001828;
   background-color: #2d4763;
   padding: 10px;
   margin-bottom: 20px;
+  min-width: 320px;
 }
 
 .post-card-attributes {
@@ -40,6 +40,7 @@
   justify-content: center;
   align-items: center;
   color: orange;
+  margin-inline: 10px;
 }
 
 .user {
@@ -65,7 +66,7 @@
   width: 50vw;
   /* border-radius: 10px; */
   transition: 0.3s;
-  min-width: 380px;
+  min-width: 320px;
   /* color: #cbdee9; */
   border: 1px solid #1a2c40;
 }

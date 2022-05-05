@@ -147,12 +147,37 @@ router.patch('/:post_id', keycloak.protect(), async (req, res) => {
         .update(updatedPost)
         .returning('*')
         .catch(err => console.log(err))
-      res.status(201).send(confirmUpdate[0]);
+      res.status(200).send(confirmUpdate[0]);
     } else {
       res.sendStatus(403);
     }
   } else {
     res.sendStatus(400);
+  }
+})
+
+//-------------------------------------------------------------------------------------------
+// DELETE Routes
+//-------------------------------------------------------------------------------------------
+
+// Delete a post (must be authorized)
+router.delete('/:post_id', keycloak.protect(), async (req, res) => {
+  const token = req.kauth.grant.access_token.content;
+
+  let deletedPost = await knex('posts').select('*')
+    .where({id: req.params.post_id, username: token.preferred_username})
+    .catch(err => console.log(err))
+
+  if (deletedPost?.length > 0) {
+    let confirmDelete = await knex('posts')
+      .where({id: req.params.post_id, username: token.preferred_username})
+      .delete()
+      .returning('*')
+      .catch(err => console.log(err))
+
+    res.status(200).send(deletedPost[0]);
+  } else {
+    res.sendStatus(400)
   }
 })
 

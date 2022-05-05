@@ -19,7 +19,7 @@
   color: #cbdee9;
   margin: 30px;
   width: 60vw;
-  min-width: 380px;
+  min-width: 320px;
 }
 
 .post-page-title {
@@ -44,4 +44,14 @@
   .post-page-attributes {
     flex-direction: column;
   }
+}
+
+.attribute {
+  margin-bottom: 10px;
+}
+
+.delete {
+  background-color: #ff3838;
+  border: 2px solid #ff3838;
+  color:#001828
 }

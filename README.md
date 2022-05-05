@@ -14,8 +14,8 @@
   - [x] The full post should be displayed.
 - [x] As a blogger I want to be able to edit a post so that I can fix any mistakes I made creating it.
   - [x]  When the user toggles edit mode, the page remains the same and the fields become editable.
-- [ ] As a blogger I want to be able to delete a post so that I can remove any unwanted content.
-  - [ ] When the user deletes the blog they should be redirected to all of their blog posts.
+- [x] As a blogger I want to be able to delete a post so that I can remove any unwanted content.
+  - [x] When the user deletes the blog they should be redirected to all of their blog posts.
 - [x] As a visitor I want to be able to view all posts created by all users so that I can consume content.
   - [x] Unauthenticated users should be able to view all posts, and any single post.
   - [x] The posts should only display the first 100 characters with “...” at the end if they are longer than 100 characters.

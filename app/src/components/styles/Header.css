@@ -6,7 +6,8 @@
   background-color: #001828;
   height: 80px;
   box-shadow: 0px 0px 3px 3px black;
-  color: #cbdee9
+  color: #cbdee9;
+  min-width: 380px;
 }
 
 .left-section {
@@ -24,7 +25,7 @@
 
 .hamburger:hover {
   transform: scale(1.05);
-  color: orange;
+  color: #4dacff;
 }
 
 .header-title {
@@ -34,7 +35,7 @@
 
 .header-title:hover {
   transform: scale(1.05);
-  color: orange;
+  color: #4dacff;
 }
 
 .logout {
@@ -54,7 +55,7 @@
 
 .login:hover {
   text-decoration: underline;
-  color: orange;
+  color: #4dacff;
 }
 
 /* .logout-text:hover {

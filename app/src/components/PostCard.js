@@ -33,20 +33,26 @@ const PostCard = ({ post }) => {
       setShortTitle(post.title)
     }
 
-  }, [post, blogContext.currentPost])
+  }, [post, blogContext.currentPost, blogContext.allPosts, blogContext.publicPosts])
 
-  const openPost = () => {
-    blogContext.setCurrentPost(post)
-    navigate(`/posts/${post.id}`)
+  const openPost = (e) => {
+    if (e.target.id !== 'user-link') {
+      blogContext.setCurrentPost(post)
+      navigate(`/posts/${post.id}`)
+    }
   }
 
   const goToUser = () => {
-    blogContext.setOtherUserPosts(blogContext.allPosts.filter(allPost => allPost.username === post.username))
+    if (keycloak.authenticated) {
+      blogContext.setOtherUserPosts(blogContext.allPosts.filter(allPost => allPost.username === post.username))
+    } else {
+      blogContext.setOtherUserPosts(blogContext.publicPosts.filter(publicPost => publicPost.username === post.username))
+    }
     navigate(`/user/${post.username}`)
   }
 
   return (
-    <div key={post.id} className={`post-card-wrapper ${post.username === keycloak.tokenParsed?.preferred_username ? 'my-card' : 'other-card'}`}>
+    <div key={post.id} className={`post-card-wrapper ${post.username === keycloak.tokenParsed?.preferred_username ? 'my-card' : 'other-card'}`}  onClick={openPost}>
       <div className='post-card-attributes'>
         <div className={`public ${post.username === keycloak.tokenParsed?.preferred_username && 'hightlight'}`}>
           {post.public ?
@@ -55,12 +61,12 @@ const PostCard = ({ post }) => {
           }
         </div>
         <Link to={`/user/${post.username}`} className='link' onClick={goToUser}>
-          <div className={`user ${post.username === keycloak.tokenParsed?.preferred_username && 'hightlight'}`}>
+          <div className={`user ${post.username === keycloak.tokenParsed?.preferred_username && 'hightlight'}`} id='user-link'>
             {post.username}
           </div>
         </Link>
       </div>
-      <div className={`post-card`} onClick={openPost}>
+      <div className={`post-card`}>
         <div className='post-card-title'>
           {shortTitle}
         </div>
