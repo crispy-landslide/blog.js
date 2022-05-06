@@ -39,7 +39,6 @@ const PostPage = () => {
     if (initialized && blogContext.currentPost === undefined) {
       let found = false
       if (keycloak.authenticated && blogContext.allPosts) {
-        console.log("Trying to find current post from allPosts")
         for (let post of blogContext.allPosts) {
           if (post.id === id) {
             blogContext.setCurrentPost(post)
@@ -52,7 +51,6 @@ const PostPage = () => {
           navigate('/')
         }
       } else if (!keycloak.authenticated && blogContext.publicPosts) {
-        console.log("Trying to find current post from publicPosts")
         for (let post of blogContext.publicPosts) {
           if (post.id === id) {
             blogContext.setCurrentPost(post)
@@ -65,7 +63,6 @@ const PostPage = () => {
           navigate('/')
         }
       }
-
     }
 
   }, [blogContext.currentPost, blogContext.publicPosts, blogContext.allPosts, keycloak.authenticated])
