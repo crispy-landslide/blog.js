@@ -1,13 +1,13 @@
 import React, { useState, useContext, useEffect } from 'react';
-import './styles/PostPage.css'
 import { useKeycloak } from '@react-keycloak/web'
 import { BlogContext } from "../App.js";
 import { useNavigate, Link } from 'react-router-dom'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter'
-import {dracula} from 'react-syntax-highlighter/dist/esm/styles/prism'
+import {oneDark} from 'react-syntax-highlighter/dist/esm/styles/prism'
 import EditPost from './EditPost'
+import './styles/PostPage.css'
 
 const formatDate = (date) => {
   if (date) {
@@ -117,11 +117,13 @@ const PostPage = () => {
                   return !inline && match ? (
                     <SyntaxHighlighter
                       children={String(children).replace(/\n$/, '')}
-                      style={dracula}
+                      style={oneDark}
                       language={match[1]}
                       PreTag="div"
                       showLineNumbers
                       showInlineLineNumbers
+                      customStyle={{"font-size": "max(14px, 1.2vh)", "margin": "0px"}}
+                      lineNumberStyle={{"padding-right": "10px", "min-width": "1.2em"}}
                       {...props}
                     />
                   ) : (

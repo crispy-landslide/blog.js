@@ -80,3 +80,25 @@
   background-color: #001828;
   height: 2px;
 }
+
+/* .post-page-content code {
+  border: none;
+  background-color: #001828;
+  height: 2px;
+  font-size: max(14px, 1.2vh);
+  padding: 0px;
+  text-align: left;
+}
+
+
+.post-page-content .linenumber {
+  padding: 0px;
+  min-width: 0px;
+  text-align: left;
+}
+
+.post-page-content .linenumber .react-syntax-highlighter-line-number {
+  padding: 0px;
+  min-width: 0px;
+  text-align: left;
+} */
