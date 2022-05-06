@@ -3,8 +3,8 @@ services:
     build: ./app
     container_name: blog-app
     environment:
-      - REACT_APP_SERVER_URL=https://blog.e-acres.com
-      - REACT_APP_AUTH_URL=https://blog.e-acres.com
+      - REACT_APP_SERVER_URL=http://localhost:3001
+      - REACT_APP_AUTH_URL=http://localhost:8080
     depends_on:
       - blog-api
 
@@ -14,7 +14,7 @@ services:
     environment:
       - PORT=3001
       - NODE_ENV=production
-      - AUTH_URL=https://blog.e-acres.com
+      - AUTH_URL=http://localhost:8080
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=/run/secrets/db_pass
       - POSTGRES_DB=postgres

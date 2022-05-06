@@ -36,3 +36,5 @@ server/env/
 */env/
 *pass.txt
 */.env
+
+./docker-compose.yml
