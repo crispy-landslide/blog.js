@@ -25,11 +25,17 @@ const PostPage = () => {
   const [created, setCreated] = useState()
   const [modified, setModified] = useState()
   const [edit, setEdit] = useState(false)
+  const [isAdmin, setIsAdmin] = useState(false)
 
   useEffect(() => {
     let id = Number.parseInt(window.location.pathname.split('/posts/')[1])
     setCreated(new Date(blogContext.currentPost?.created))
     setModified(new Date(blogContext.currentPost?.modified))
+
+    if (keycloak.authenticated) {
+      setIsAdmin(keycloak.hasRealmRole('admin'))
+    }
+
     if (initialized && blogContext.currentPost === undefined) {
       let found = false
       if (keycloak.authenticated && blogContext.allPosts) {
@@ -56,7 +62,7 @@ const PostPage = () => {
       }
     }
 
-  }, [blogContext.currentPost, blogContext.publicPosts, blogContext.allPosts])
+  }, [blogContext.currentPost, blogContext.publicPosts, blogContext.allPosts, keycloak.authenticated])
 
   const goToUser = () => {
     if (keycloak.authenticated) {
@@ -79,30 +85,24 @@ const PostPage = () => {
               <><img className='svg' src='/earth-americas-solid.svg' alt=''/>Public</> :
               <><img className='svg' src='/lock-solid.svg' alt=''/>Private</>}
           </div>
-          <div className={`public attribute ${blogContext.currentPost.username === keycloak.tokenParsed?.preferred_username && 'hightlight'}`}>
-            Created {formatDate(created)}
-          </div>
-          {formatDate(created) !== formatDate(modified) &&
-            <div className={`public attribute ${blogContext.currentPost.username === keycloak.tokenParsed?.preferred_username && 'hightlight'}`}>
-                <>Modified {formatDate(modified)}</>
-            </div>
-          }
-          <Link to={`/user/${blogContext.currentPost.username}`} className='link' onClick={goToUser}>
-            <div className={`user attribute ${blogContext.currentPost.username === keycloak.tokenParsed?.preferred_username && 'hightlight'}`} id='user-link'>
-              {blogContext.currentPost.username}
-            </div>
-        </Link>
-
-          {keycloak.tokenParsed?.preferred_username === blogContext.currentPost.username &&
-            <div className={`user attribute ${blogContext.currentPost.username === keycloak.tokenParsed?.preferred_username && 'hightlight'}`}>
-              <img className='svg logout' src='/pencil-solid.svg' alt='edit' onClick={() => setEdit(true)}/>
-            </div>
-          }
         </div>
         <div className='post-page'>
           <div className='post-page-title'>
             {blogContext.currentPost.title}
           </div>
+          <div className='author-edit' >
+            <Link to={`/user/${blogContext.currentPost.username}`} className='link' onClick={goToUser}>
+              <div className={`user attribute ${blogContext.currentPost.username === keycloak.tokenParsed?.preferred_username && 'hightlight'}`} id='user-link'>
+                {blogContext.currentPost.username}
+              </div>
+            </Link>
+            {((keycloak.tokenParsed?.preferred_username === blogContext.currentPost.username || isAdmin) && !blogContext.currentPost.preview) &&
+              <div className={`user attribute ${blogContext.currentPost.username === keycloak.tokenParsed?.preferred_username && 'hightlight'}`}>
+                <img className='svg logout edit' src='/pencil-solid.svg' alt='edit' onClick={() => setEdit(true)}/>
+              </div>
+            }
+          </div>
+
           <hr className='separator' />
           <div className='post-page-content'>
             <ReactMarkdown
@@ -128,6 +128,17 @@ const PostPage = () => {
               }}
             />
           </div>
+          <div className='post-page-attributes'>
+            <div className={`public attribute ${blogContext.currentPost.username === keycloak.tokenParsed?.preferred_username && 'hightlight'}`}>
+              Created {formatDate(created)}
+            </div>
+            {formatDate(created) !== formatDate(modified) &&
+              <div className={`public attribute ${blogContext.currentPost.username === keycloak.tokenParsed?.preferred_username && 'hightlight'}`}>
+                  <>Modified {formatDate(modified)}</>
+              </div>
+            }
+          </div>
+
         </div>
       </div> : ''
   )

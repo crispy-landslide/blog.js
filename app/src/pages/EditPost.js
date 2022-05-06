@@ -75,9 +75,10 @@ const EditPost = ({ post, setEdit }) => {
         public: isPublic ? 1 : 0,
         title,
         content,
-        username: keycloak.tokenParsed.preferred_username + ' ',
+        username: keycloak.tokenParsed.preferred_username,
         created: (new Date()).toISOString(),
-        modified: (new Date()).toISOString()
+        modified: (new Date()).toISOString(),
+        preview: true
       })
     }
     setShowPreview(!showPreview)
@@ -119,14 +120,24 @@ const EditPost = ({ post, setEdit }) => {
 
   return (
     <div className='create-post-wrapper'>
-      <button type='button' className='button' onClick={cancelEdit}>Cancel Edit</button>
+
       {showPreview ?
         <>
-          <button type='button' className='button' onClick={previewHandler}>Cancel Preview</button>
+          <div className='cancel-buttons-wrapper' >
+            <div className='cancel-buttons' >
+              <button type='button' className='button' onClick={cancelEdit}>Cancel Edit</button>
+              <button type='button' className='button' onClick={previewHandler}>Cancel Preview</button>
+            </div>
+          </div>
           <PostPage />
         </> :
         <div className='create-post'>
           <form className='create-post-form' onSubmit={editPostHandler}>
+            <div className='post-buttons'>
+              <input className='button' type='submit' value='Submit Edit!'/>
+              <button type='button' className='button' onClick={cancelEdit}>Cancel Edit</button>
+              <button type='button' className='button' onClick={previewHandler}>Preview</button>
+            </div>
             <div className='is-public'>
               <span className='checkbox-label'>Public ?</span>
               <label className="switch">
@@ -146,14 +157,11 @@ const EditPost = ({ post, setEdit }) => {
             <div className='create-post-value content'>
               <textarea className='textarea' name='content' id='content' placeholder='What do you have to say?' defaultValue={content} onChange={changeContent} required/>
             </div>
-            <div className='post-buttons'>
-              <input className='button' type='submit' value='Edit Post!'/>
-              <button type='button' className='button' onClick={previewHandler}>Preview</button>
-            </div>
+
+            <button type='button' className='button delete' onClick={deletePost}>Delete Post!</button>
           </form>
         </div>
       }
-    <button type='button' className='button delete' onClick={deletePost}>Delete Post!</button>
     </div>
   )
 }

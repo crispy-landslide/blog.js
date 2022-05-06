@@ -95,9 +95,11 @@
 
 .post-card-content {
   font-size: 20px;
-  margin: 10px;
   text-align: left;
   color: #cbdee9;
+  width: 100%;
+  word-wrap: break-word;
+  margin: 10px;
 }
 
 .expand {

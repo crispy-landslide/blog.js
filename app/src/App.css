@@ -1,3 +1,9 @@
+@font-face {
+  font-family: 'Block';
+  src: url('../public/BlockHelvetica-gxpM6.ttf');
+}
+
+
 .App {
   text-align: center;
 }

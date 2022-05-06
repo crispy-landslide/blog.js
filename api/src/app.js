@@ -7,7 +7,7 @@ const posts = require('./routes/posts.js')
 
 const knex = require('knex')(require('../knexfile.js')[process.env.NODE_ENV || 'development']);
 
-(async () => {
+process.env.NODE_ENV === 'development' && (async () => {
   try {
     console.log("Rolling back database . . .")
     await knex.migrate.rollback()

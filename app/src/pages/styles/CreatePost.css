@@ -6,6 +6,21 @@
   width: 100vw;
 }
 
+.cancel-buttons-wrapper {
+  width: 60vw;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.cancel-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 100%;
+}
+
 .create-post {
   color: #cbdee9;
   margin: 30px;
@@ -57,6 +72,7 @@
   border: 2px solid #2d4763;
   padding: 10px;
   font-size: 16px;
+  border-radius: 5px;
 }
 
 .input:focus {

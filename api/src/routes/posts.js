@@ -23,7 +23,6 @@ router.get('/', async (req, res) => {
 router.get('/user/:uid', keycloak.protect(), async (req, res) => {
   const token = req.kauth.grant.access_token.content;
   let user = await knex('users').select('*').where({id: token.sub}).catch(err => console.log(err))
-
   if (user.length === 0) {
     let newUser = {
       id: token.sub,
@@ -135,15 +134,19 @@ router.patch('/:post_id', keycloak.protect(), async (req, res) => {
       req.body.username !== undefined &&
       req.body.modified!== undefined) {
 
-    if (token.preferred_username === req.body.username) {
+    let isAdmin = token.realm_access?.roles?.indexOf('admin') > -1
+
+    if (token.preferred_username === req.body.username || isAdmin) {
       let updatedPost = {};
       (req.body.title !== undefined) && (updatedPost.title = req.body.title);
       (req.body.content !== undefined) && (updatedPost.content = req.body.content);
       (req.body.public !== undefined) && (updatedPost.public = req.body.public);
       updatedPost.modified = req.body.modified;
 
+      let query = {id: req.params.post_id};
+      !isAdmin && (query.username = token.preferred_username)
       let confirmUpdate = await knex('posts')
-        .where({id: req.params.post_id, username: token.preferred_username})
+        .where(query)
         .update(updatedPost)
         .returning('*')
         .catch(err => console.log(err))
@@ -164,13 +167,18 @@ router.patch('/:post_id', keycloak.protect(), async (req, res) => {
 router.delete('/:post_id', keycloak.protect(), async (req, res) => {
   const token = req.kauth.grant.access_token.content;
 
+  let isAdmin = token.realm_access?.roles?.indexOf('admin') > -1
+
+  let query = {id: req.params.post_id};
+  !isAdmin && (query.username = token.preferred_username)
+
   let deletedPost = await knex('posts').select('*')
-    .where({id: req.params.post_id, username: token.preferred_username})
+    .where(query)
     .catch(err => console.log(err))
 
   if (deletedPost?.length > 0) {
     let confirmDelete = await knex('posts')
-      .where({id: req.params.post_id, username: token.preferred_username})
+      .where(query)
       .delete()
       .returning('*')
       .catch(err => console.log(err))

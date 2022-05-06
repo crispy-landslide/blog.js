@@ -13,7 +13,7 @@ services:
     container_name: blog-api
     environment:
       - PORT=3001
-      - NODE_ENV=development
+      - NODE_ENV=production
       - AUTH_URL=https://blog.e-acres.com
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=/run/secrets/db_pass
