@@ -130,11 +130,17 @@ const EditPost = ({ post, setEdit }) => {
             </div>
           </div>
           <PostPage />
+          <div className='cancel-buttons-wrapper' >
+            <div className='cancel-buttons' >
+              <button type='button' className='button' onClick={cancelEdit}>Cancel Edit</button>
+              <button type='button' className='button' onClick={previewHandler}>Cancel Preview</button>
+            </div>
+          </div>
         </> :
         <div className='create-post'>
           <form className='create-post-form' onSubmit={editPostHandler}>
             <div className='post-buttons'>
-              <input className='button' type='submit' value='Submit Edit!'/>
+              <input className='button' type='submit' value='Save Changes'/>
               <button type='button' className='button' onClick={cancelEdit}>Cancel Edit</button>
               <button type='button' className='button' onClick={previewHandler}>Preview</button>
             </div>
@@ -157,8 +163,12 @@ const EditPost = ({ post, setEdit }) => {
             <div className='create-post-value content'>
               <textarea className='textarea' name='content' id='content' placeholder='What do you have to say?' defaultValue={content} onChange={changeContent} required/>
             </div>
-
-            <button type='button' className='button delete' onClick={deletePost}>Delete Post!</button>
+            <div className='post-buttons'>
+              <input className='button' type='submit' value='Save Changes'/>
+              <button type='button' className='button' onClick={cancelEdit}>Cancel Edit</button>
+              <button type='button' className='button' onClick={previewHandler}>Preview</button>
+            </div>
+            <button type='button' className='button delete' onClick={deletePost}>Delete Post</button>
           </form>
         </div>
       }

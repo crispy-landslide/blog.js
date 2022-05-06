@@ -103,7 +103,7 @@ const CreatePost = () => {
               <textarea className='textarea' name='content' id='content' placeholder='What do you have to say?' defaultValue={content} onChange={changeContent} required/>
             </div>
             <div className='post-buttons'>
-              <input className='button' type='submit' value='Create Post!'/>
+              <input className='button' type='submit' value='Create Post'/>
               <button type='button' className='button' onClick={previewHandler}>Preview</button>
             </div>
           </form>
