@@ -4,7 +4,6 @@ const knexfile = require('../../knexfile.js');
 const initKeycloak = require('../keycloak-config.js');
 const keycloak = initKeycloak();
 
-
 const router = express.Router();
 const knex = knexImport(knexfile[process.env.NODE_ENV || 'development']);
 
@@ -20,7 +19,7 @@ router.get('/', async (req, res) => {
 })
 
 // Get all posts belonging to a user (must be authorized)
-router.get('/user/:uid', keycloak.protect(), async (req, res) => {
+router.get('/user/:uid', [keycloak.middleware(), keycloak.protect()], async (req, res) => {
   const token = req.kauth.grant.access_token.content;
   let user = await knex('users').select('*').where({id: token.sub}).catch(err => console.log(err))
   if (user.length === 0) {
@@ -38,7 +37,7 @@ router.get('/user/:uid', keycloak.protect(), async (req, res) => {
 })
 
 // Get all private posts belonging to a user (must be authorized)
-router.get('/user/:uid/private', keycloak.protect(), async (req, res) => {
+router.get('/user/:uid/private', [keycloak.middleware(), keycloak.protect()], async (req, res) => {
   const token = req.kauth.grant.access_token.content;
   let user = await knex('users').select('*').where({id: token.sub}).catch(err => console.log(err))
 
@@ -57,7 +56,7 @@ router.get('/user/:uid/private', keycloak.protect(), async (req, res) => {
 })
 
 // Get all private posts belonging to a user (must be authorized)
-router.get('/all', keycloak.protect(), async (req, res) => {
+router.get('/all', [keycloak.middleware(), keycloak.protect()], async (req, res) => {
   const token = req.kauth.grant.access_token.content;
   let user = await knex('users').select('*').where({id: token.sub}).catch(err => console.log(err))
 
@@ -91,7 +90,7 @@ router.get('/user/:username/public', async (req, res) => {
 //-------------------------------------------------------------------------------------------
 
 // Create a new post (must be authorized)
-router.post('/', keycloak.protect(), async (req, res) => {
+router.post('/', [keycloak.middleware(), keycloak.protect()], async (req, res) => {
   const token = req.kauth.grant.access_token.content;
   if (req.body.title !== undefined &&
       req.body.content !== undefined &&
@@ -126,7 +125,7 @@ router.post('/', keycloak.protect(), async (req, res) => {
 //-------------------------------------------------------------------------------------------
 
 // Edit a post (must be authorized)
-router.patch('/:post_id', keycloak.protect(), async (req, res) => {
+router.patch('/:post_id', [keycloak.middleware(), keycloak.protect()], async (req, res) => {
   const token = req.kauth.grant.access_token.content;
   if ((req.body.title !== undefined ||
       req.body.content !== undefined ||
@@ -164,7 +163,7 @@ router.patch('/:post_id', keycloak.protect(), async (req, res) => {
 //-------------------------------------------------------------------------------------------
 
 // Delete a post (must be authorized)
-router.delete('/:post_id', keycloak.protect(), async (req, res) => {
+router.delete('/:post_id', [keycloak.middleware(), keycloak.protect()], async (req, res) => {
   const token = req.kauth.grant.access_token.content;
 
   let isAdmin = token.realm_access?.roles?.indexOf('admin') > -1

@@ -22,7 +22,6 @@ process.env.NODE_ENV === 'development' && (async () => {
 })();
 
 const keycloak = initKeycloak();
-app.use(keycloak.middleware());
 
 app.use(express.json())
 app.use(cors())
