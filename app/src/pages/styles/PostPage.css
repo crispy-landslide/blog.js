@@ -74,3 +74,9 @@
   border-radius: 5px;
   border: 2px solid #001828;
 }
+
+.post-page-content hr {
+  border: none;
+  background-color: #001828;
+  height: 2px;
+}

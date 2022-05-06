@@ -117,6 +117,8 @@ const PostPage = () => {
                       style={dracula}
                       language={match[1]}
                       PreTag="div"
+                      showLineNumbers
+                      showInlineLineNumbers
                       {...props}
                     />
                   ) : (
