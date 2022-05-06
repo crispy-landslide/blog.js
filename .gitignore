@@ -39,3 +39,5 @@ server/env/
 
 ./docker-compose.yml
 docker-compose.yml
+./app/public/keycloak.json
+app/public/keycloak.json

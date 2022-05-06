@@ -36,22 +36,22 @@ const Home = () => {
           {keycloak.authenticated ?
             <div className='filter-buttons'>
               <button
-                className={`button ${active === 'all-posts' ? 'active': ''}`}
+                className={`button options ${active === 'all-posts' ? 'active': ''}`}
                 onClick={() => onFilterChange(blogContext.allPosts, 'all-posts')}>
                   All Posts
               </button>
               <button
-                className={`button ${active === 'all-public' ? 'active': ''}`}
+                className={`button options ${active === 'all-public' ? 'active': ''}`}
                 onClick={() => onFilterChange(blogContext.publicPosts, 'all-public')}>
                   All Public Posts
               </button>
               <button
-                className={`button ${active === 'my-posts' ? 'active': ''}`}
+                className={`button options ${active === 'my-posts' ? 'active': ''}`}
                 onClick={() => onFilterChange(blogContext.userPosts, 'my-posts')}>
                   My Posts
               </button>
               <button
-                className={`button ${active === 'my-private' ? 'active': ''}`}
+                className={`button options ${active === 'my-private' ? 'active': ''}`}
                 onClick={() => onFilterChange(blogContext.privatePosts, 'my-private')}>
                   My Private Posts
               </button>

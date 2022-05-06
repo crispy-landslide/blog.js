@@ -18,19 +18,31 @@
 } */
 
 .button {
-  background-color: #001828;
-  border: 2px solid #001828;
-  border-radius: 5px;
+  background-color: #4dacff;
+  border: 2px solid #4dacff;
+  border-radius: max(5px, 0.5vh);
   padding: 5px;
-  margin-block: 10px;
-  margin-right: 10px;
+  margin-block: max(10px, 2vh);
+  margin-right: max(10px, 2vh);
   transition: 0.2s;
-  color: #cbdee9;
-  width: 150px;
+  color: #001828;
+  width: max(150px, 20vh);
+  font-size: max(16px, 2vh);
 }
 
 .button:hover {
   transform: scale(1.1);
+}
+
+.no-posts {
+  color: #cbdee9;
+  font-size: max(36px, 4vh);
+}
+
+.options {
+  background-color: #001828;
+  border: 2px solid #001828;
+  color: #cbdee9;
 }
 
 .active {
@@ -39,7 +51,6 @@
   color: #4dacff;
 }
 
-.no-posts {
-  color: #cbdee9;
-  font-size: 36px;
+.page-title {
+  font-size: max(36px, 4vh);
 }

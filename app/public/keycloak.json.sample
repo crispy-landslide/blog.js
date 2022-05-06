@@ -1,8 +1,0 @@
-{
-  "realm": "showcase-auth",
-  "auth-server-url": "http://localhost:8080",
-  "ssl-required": "external",
-  "resource": "blogjs-app",
-  "public-client": true,
-  "confidential-port": 0
-}

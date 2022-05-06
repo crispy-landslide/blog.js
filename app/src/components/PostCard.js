@@ -54,21 +54,23 @@ const PostCard = ({ post }) => {
   return (
     <div key={post.id} className={`post-card-wrapper ${post.username === keycloak.tokenParsed?.preferred_username ? 'my-card' : 'other-card'}`}  onClick={openPost}>
       <div className='post-card-attributes'>
-        <div className={`public ${post.username === keycloak.tokenParsed?.preferred_username && 'hightlight'}`}>
+        <div className={`public`}>
           {post.public ?
             <><img className='svg' src='/earth-americas-solid.svg' alt=''/>Public</> :
-            <><img className='svg' src='/lock-solid.svg' alt=''/>Private</>
+            <div className='private'><img className='svg' src='/lock-solid.svg' alt=''/>Private</div>
           }
         </div>
-        <Link to={`/user/${post.username}`} className='link' onClick={goToUser}>
-          <div className={`user ${post.username === keycloak.tokenParsed?.preferred_username && 'hightlight'}`} id='user-link'>
-            {post.username}
-          </div>
-        </Link>
       </div>
       <div className={`post-card`}>
         <div className='post-card-title'>
           {shortTitle}
+        </div>
+        <div className='post-card-attributes'>
+          <Link to={`/user/${post.username}`} className='link' onClick={goToUser}>
+            <div className={`user ${post.username === keycloak.tokenParsed?.preferred_username && 'hightlight'}`} id='user-link'>
+              {post.username}
+            </div>
+          </Link>
         </div>
         <hr className='rule'/>
         <div className='post-card-content'>

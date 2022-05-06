@@ -1,7 +1,7 @@
 .post-card-wrapper {
   margin: 0px;
   width: 55vw;
-  border-radius: 5px;
+  border-radius: max(5px, 0.5vh);
   transition: 0.3s;
   color: #cbdee9;
   border: 2px solid #001828;
@@ -14,21 +14,24 @@
 .post-card-attributes {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
-  margin-bottom: 10px;
+  justify-content: flex-start;
+  align-items: flex-start;
+  /* margin-bottom: 10px; */
   /* margin-inline: 10px; */
 }
 
 .post-card-timestamps {
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
   /* margin-inline: 10px; */
   margin-top: 10px;
+  font-size: max(18px, 1.2vh);
 }
 
 .svg {
-  width: 20px;
+  width: max(20px, 2vh);
   -webkit-filter: invert(100%); /* safari 6.0 - 9.0 */
   filter: invert(100%);
   margin-right: 10px;
@@ -37,15 +40,21 @@
 .public {
   display: flex;
   flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  color: #4dacff;
-  margin-inline: 10px;
+  justify-content: flex-start;
+  align-items: flex-start;
+  color: #98bdd3;
+  font-size: max(18px, 1.2vh);
+  /* margin-inline: 10px; */
+}
+
+.private {
+  color:#4dacff;
 }
 
 .user {
-  color: #4dacff;
+  color: aquamarine;
   z-index: 999;
+  font-size: max(18px, 1.2vh);
 }
 
 .user:hover {
@@ -55,9 +64,10 @@
 .link {
   text-decoration: none;
   z-index: 999;
+  text-align: left;
 }
 
-.hightlight {
+.highlight {
   color: aquamarine
 }
 
@@ -87,19 +97,19 @@
 }
 
 .post-card-title {
-  font-size: 24px;
-  margin: 10px;
+  font-size: max(24px, 2vh);
+  margin-block: 10px;
   text-align: left;
   color: #92cbff;
 }
 
 .post-card-content {
-  font-size: 20px;
+  font-size: max(20px, 1.5vh);
   text-align: left;
   color: #cbdee9;
   width: 100%;
   word-wrap: break-word;
-  margin: 10px;
+  margin-block: 10px;
 }
 
 .expand {
@@ -123,12 +133,12 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border-radius: 5px;
+  border-radius: max(10px, 0.5vh);
   margin-block: 30px;
-  font-size: 24px;
+  font-size: max(24px, 2.5vh);
   width: 30vw;
   border: 1px solid #001828;
-  height: 40px;
+  height: max(40px, 3vh);
   color: #cbdee9;
   background-color: #001828;
 }
@@ -137,5 +147,5 @@
   border: 1px solid #4dacff;
   background-color: #4dacff;
   color: black;
-  font-size: 36px;
+  font-size: max(36px, 3vh);
 }

@@ -38,19 +38,19 @@ const Header = () => {
         Blog.js
       </div>
 
-        <div className='logout-wrapper' onClick={clickHandler}>
-          {keycloak.authenticated ?
-            <>
-              <img className='svg logout' src='/arrow-right-from-bracket-solid.svg' alt='logout' />
-              <div className='logout-text'>
-                {keycloak.tokenParsed.preferred_username}
-              </div>
-            </> :
-            <div className='logout-text login'>
-              Login
+      <div className='logout-wrapper' onClick={clickHandler}>
+        {keycloak.authenticated ?
+          <>
+            <img className='svg logout' src='/arrow-right-from-bracket-solid.svg' alt='logout' />
+            <div className='logout-text'>
+              {keycloak.tokenParsed.preferred_username}
             </div>
+          </> :
+          <div className='logout-text login'>
+            Login
+          </div>
         }
-        </div>
+      </div>
 
     </div>
   )

@@ -8,12 +8,13 @@
 
 .post-page-attributes {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
   margin-bottom: 5px;
-  width: 60vw;
+  width: 100%;
   margin-top: 30px;
+  text-align: left;
 }
 
 .post-page {
@@ -38,12 +39,16 @@
 
 .post-page-content {
   text-align: left;
-  font-size: 18px;
+  font-size: max(18px, 1.5vh);
 }
 
 .attribute {
   margin-bottom: 10px;
-  width: 50%;
+  width: 100%;
+  text-align: left;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
 }
 
 .delete {
@@ -65,7 +70,7 @@
 
 
 .post-page-content img {
-  max-width: 100%;
+  max-width: max(60%, 320px);
   border-radius: 5px;
   border: 2px solid #001828;
 }
