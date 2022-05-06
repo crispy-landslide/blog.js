@@ -9,6 +9,7 @@ services:
       - REACT_APP_KEYCLOAK_CLIENT=blogjs-app
     depends_on:
       - blog-api
+    restart: unless-stopped
 
   blog-api:
     build: ./api
@@ -30,6 +31,7 @@ services:
       - db_pass
     env_file:
       - ./api/env/.env
+    restart: unless-stopped
 
   blog-db:
     image: postgres:alpine
@@ -44,6 +46,7 @@ services:
       - ./db:/var/lib/postgresql/data
     secrets:
       - db_pass
+    restart: unless-stopped
 
 secrets:
   db_pass:
